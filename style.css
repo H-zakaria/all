@@ -1,0 +1,164 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+    background-color: rgb(27, 20, 20);
+    text-transform: uppercase;
+    
+}
+.nav{
+    background-color: #333;
+    height: 75px;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    flex: 5;
+}
+.nav ul li a{
+    text-decoration: none;
+    color: blanchedalmond;
+    margin: 20px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+.nav ul li a:hover{
+    opacity: 1;
+}
+.nav .username{
+    flex: 1;
+    padding: 0 15px;
+    color: rgb(238, 143, 0);
+    font-size: 16px;
+    text-decoration: underline;
+}
+#mid{
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    margin: 0;
+    padding: 0 20px;
+}
+.container{
+padding-top: 74px;
+
+}
+.table1{
+    height: 400px;
+    overflow-y: scroll;
+}
+table{
+    border-collapse: collapse;
+    border: 1px solid #000;
+    width: 90vw;
+    margin: auto;
+    background-color: #aca9aa;
+    text-align: center;
+    font-weight: 400;
+    
+
+}
+.employes{
+    overflow-y: auto;
+    height: 400px;
+}
+.employes thead th{
+    position: sticky;
+    top: 0px;
+}
+th, td{
+    padding: 5px 10px;
+    border: 1px solid;
+}
+th{
+    text-transform: capitalize;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    font-weight: 200;
+}
+tr:hover{
+    background-color: #bebebe;
+}
+
+.employes tbody .sup{
+    background-color: rgb(255, 187, 0);
+}
+.employes tbody .sup:hover{
+    background-color: rgb(255, 153, 0);
+}
+button{
+    padding: 6px 12px;
+    text-transform: capitalize;
+    border: none;
+    border-radius: 4px;
+    font-weight: normal;
+    text-align: center;
+    font-size: 16;
+    cursor: pointer;
+    background-color: #333;
+    color: blanchedalmond;
+
+}
+button:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+button:hover{
+    opacity: 0.8;
+}
+
+
+/*form*/
+.form_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+.form_log{
+    display: flex;
+    flex-direction: column;
+    border: black 2px solid;
+    padding: 20px 15px;
+    background-color:rgb(73, 58, 58);
+    border-radius: 9px;
+}
+.form_log .form_field{
+    padding: 5px 0;
+    text-align: center;
+    margin: 6px 0;
+    border: 1px solid black;
+}
+.form_log .form_field:hover{
+    border: rgb(121, 24, 24) 1px solid;
+}
+.form_log button{
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+.form_log button:hover{
+    background-color: rgb(78, 45, 21);
+}
+
+/*details*/
+
+.details{
+    padding-top: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
