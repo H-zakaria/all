@@ -6,7 +6,7 @@
 
 body{
     font-family: sans-serif;
-    background-color: rgb(27, 20, 20);
+    background-color: #162B32;
     text-transform: uppercase;
     
 }
@@ -42,13 +42,23 @@ body{
     padding: 0 15px;
     color: rgb(238, 143, 0);
     font-size: 16px;
-    text-decoration: underline;
+
 }
 #mid{
     border-left: 2px solid black;
     border-right: 2px solid black;
     margin: 0;
     padding: 0 20px;
+}
+#counter{
+    color: blanchedalmond;
+    font-size: 12px;
+   
+}
+#counter span{
+    color: #FF4838;
+    font-size: 16px;
+   
 }
 .container{
 padding-top: 74px;
@@ -60,13 +70,10 @@ padding-top: 74px;
 }
 table{
     border-collapse: collapse;
-    border: 1px solid #000;
     width: 90vw;
     margin: auto;
-    background-color: #aca9aa;
+    background-color: #eee5e8;
     text-align: center;
-    font-weight: 400;
-    
 
 }
 .employes{
@@ -77,9 +84,12 @@ table{
     position: sticky;
     top: 0px;
 }
+td{
+    font-weight: 700;
+}
 th, td{
     padding: 5px 10px;
-    border: 1px solid;
+   
 }
 th{
     text-transform: capitalize;
@@ -93,10 +103,10 @@ tr:hover{
 }
 
 .employes tbody .sup{
-    background-color: rgb(255, 187, 0);
+    background-color: #FF4838
 }
 .employes tbody .sup:hover{
-    background-color: rgb(255, 153, 0);
+    background-color: #fa6a5d
 }
 button{
     padding: 6px 12px;
@@ -134,7 +144,6 @@ button:hover{
     flex-direction: column;
     border: black 2px solid;
     padding: 20px 15px;
-    background-color:rgb(73, 58, 58);
     border-radius: 9px;
 }
 .form_log .form_field{
@@ -152,6 +161,44 @@ button:hover{
 }
 .form_log button:hover{
     background-color: rgb(78, 45, 21);
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    border: black 2px solid;
+    background-color: #a5a1a1;
+    padding: 20px 15px;
+    border-radius: 9px;
+    
+}
+form select{
+    padding: 10px 0;
+    margin: 5px 0;
+}
+.form input{
+    padding: 10px 0;
+    margin: 5px 0;
+}
+.form label{
+    font-size: 14px;
+    text-transform: capitalize;
+    margin: 5px 0;
+    color: rgb(0, 0, 0);
+}
+.form .input_btn{
+    padding: 8px 12px;
+    text-transform: capitalize;
+    border: none;
+    border-radius: 4px;
+    font-weight: normal;
+    text-align: center;
+    font-size: 16;
+    cursor: pointer;
+    background-color: #333;
+    color: blanchedalmond;
+}
+.form .input_btn:hover{
+    background-color: rgb(9, 90, 36);
 }
 
 /*details*/

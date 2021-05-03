@@ -10,12 +10,13 @@ if (!isset($_SESSION['user_id'])) {
 $noemp = $_GET['noemp'];
 $sql = "SELECT * FROM emp WHERE noemp = $noemp;";
 // $datas = selectThisEmp($conn, $_GET["noemp"]);
-$datas = maQuery($sql, 'select');
+$datas = selectAllOfOneEmpByNoemp($noemp);
+
 
 
 ?>
-<div>
-    <form class="formu" action="./includes/modifier.php" method="POST">
+<div class="form_div">
+    <form class="form" action="./includes/modifier.php" method="POST">
         <input type="number" name="noemp" value=<?php echo $datas[0]['noemp']; ?> placeholder="Entrez le noemp">
         <input type="text" name="nom" value=<?php echo $datas[0]['nom']; ?> placeholder="Entrez le nom">
         <input type="text" name="prenom" value=<?php echo $datas[0]['prenom']; ?> placeholder="Entrez le prenom">

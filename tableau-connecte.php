@@ -8,14 +8,6 @@ if (isset($_SESSION['user_id'])) {
     <div class="container">
         <div class="table1">
 
-            <?php
-
-            // $datas = countAjoutsDuJour($conn);
-            $sql = "SELECT count(*) from emp where date_ajout = DATE(NOW());";
-            $datas = maQuery($sql, 'select');
-
-
-            ?>
 
             <table class="employes">
                 <thead>
@@ -31,8 +23,10 @@ if (isset($_SESSION['user_id'])) {
                         <th>service</th>
                         <th>Projet</th>
                         <th></th>
-                        <th></th>
-                        <th></th>
+                        <?php if ($_SESSION['profil'] == 'admin') { ?>
+                            <th></th>
+                            <th></th>
+                        <?php } ?>
 
                     </tr>
                 </thead>
@@ -41,16 +35,12 @@ if (isset($_SESSION['user_id'])) {
 
                     // $datas = nomDuSup($conn);
                     $sql = "SELECT e.*, s.service, p.nomproj, e2.nom as nsup FROM emp e
-            INNER JOIN serv s on s.noserv = e.noserv
-            INNER JOIN proj p on p.noproj = e.noproj
-            LEFT JOIN emp e2 on e.sup = e2.noemp;";
-                    $datas = maQuery($sql, 'select');
+                INNER JOIN serv s on s.noserv = e.noserv
+                INNER JOIN proj p on p.noproj = e.noproj
+                LEFT JOIN emp e2 on e.sup = e2.noemp;";
 
-
-                    $sql = "SELECT DISTINCT e.noemp FROM emp e
-                INNER JOIN emp e2 on e.noemp = e2.sup;";
-                    $sups = maQuery($sql, 'select');
-
+                    $datas = infosGeneralesEmp();
+                    $sups = selectAllSupsNum();
 
                     $sups_1d = [];
                     $i = 0;
@@ -58,10 +48,6 @@ if (isset($_SESSION['user_id'])) {
                         $sups_1d[$i] = $array['noemp'];
                         $i++;
                     }
-
-
-
-
 
                     foreach ($datas as $data) {
                         if (in_array($data['noemp'], $sups_1d)) {
@@ -108,8 +94,10 @@ if (isset($_SESSION['user_id'])) {
                     <th>Designation</th>
                     <th>Ville</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    <?php if ($_SESSION['profil'] == 'admin') { ?>
+                        <th></th>
+                        <th></th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -120,9 +108,10 @@ if (isset($_SESSION['user_id'])) {
                 echo "<br>";
 
 
-                $sql = "SELECT * FROM serv;";
+
                 // $datas = selectAllFromServ($conn);
-                $datas = maQuery($sql, 'select');
+                $datas = selectAllFromServ();
+
 
                 foreach ($datas as $data) {
 
@@ -131,8 +120,10 @@ if (isset($_SESSION['user_id'])) {
                     echo "<td>" . $data['service'] . "</td>";
                     echo "<td>" . $data['ville'] . "</td>";
                     echo "<td><a href='details_service.php?noserv=$data[noserv]'><button>details</button></a></td>";
-                    echo "<td><a href='form_services.php?noserv=$data[noserv]&but=modifier'><button>Modifier</button></a></td>";
-                    echo "<td><a href='includes/supr_service.php?noserv=$data[noserv]'><button>supprimer</button></a></td>";
+                    if ($_SESSION['profil'] == 'admin') {
+                        echo "<td><a href='form_services.php?noserv=$data[noserv]&but=modifier'><button>Modifier</button></a></td>";
+                        echo "<td><a href='includes/supr_service.php?noserv=$data[noserv]'><button>supprimer</button></a></td>";
+                    }
                     echo "</tr>";
                 }
 

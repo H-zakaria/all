@@ -15,9 +15,8 @@ include_once 'header.php';
         <?php
         $noemp = $_GET['noserv'];
 
-        $sql = "SELECT serv.*, count(emp.noemp) as 'nombre_d_employes_du_service' from serv
-                INNER JOIN emp on emp.noserv = serv.noserv;";
-        $datas = maQuery($sql, 'select');
+
+        $datas = selectNbrOfEmpsByServs();
 
 
         foreach ($datas as $data) {

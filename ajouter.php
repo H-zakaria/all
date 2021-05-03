@@ -7,9 +7,11 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: signup&login_form.php");
 }
 
-$sql = " SELECT DISTINCT noproj FROM proj;";
 
-$num_projets = maQuery($sql, 'select');
+
+$num_projets = selectAllProjectsNum();
+
+
 $msg = [];
 print_r($num_projets);
 $num_projets_1d = [];
@@ -68,6 +70,23 @@ if (isset($_POST['noemp'])) {
         $noemp = $_POST['noemp'];
         $insert_date = "UPDATE emp SET date_ajout = DATE(NOW()) WHERE noemp = $noemp;";
         maQuery($insert_date, 'nop');
+        function selectAllProjectsNum()
+        {
+            $con = mysqli_init();
+            if (!$con) {
+                die("mysqli_init failed");
+            }
+            mysqli_real_connect($con, 'localhost', 'zak', 'mdp', 'gestion_emp');
+            $sql = " SELECT DISTINCT noproj FROM proj;";
+            $rs = mysqli_query($con, $sql);
+
+            $data = mysqli_fetch_all($rs, MYSQLI_ASSOC);
+            mysqli_free_result($rs);
+            return $data;
+
+            mysqli_close($con);
+        }
+
         header("Location: tableau-connecte.php?Enregistrement=succes");
     }
 }
