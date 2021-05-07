@@ -1,6 +1,8 @@
 <?php
 
-include_once 'header.php';
+// include_once(__DIR__ . '/couches/Model/Employe.php');
+include_once(__DIR__ . '/header.php');
+include_once(__DIR__ . '/couches/Service/EmployeService.php');
 
 if (!isset($_SESSION['user_id'])) {
 
@@ -8,20 +10,21 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-
-$num_projets = selectAllProjectsNum();
+$proj = new ProjetService();
+$num_projets = $proj->selectAllProjectsNum();
 
 
 $msg = [];
-print_r($num_projets);
+// print_r($num_projets);
 $num_projets_1d = [];
 foreach ($num_projets as $n) {
     $num_projets_1d[] = $n['noproj'];
 }
-print_r($num_projets_1d);
+// print_r($num_projets_1d);
 
 
-if (isset($_POST['noemp'])) {
+if (isset($_POST)) {
+
     $incomplet = false;
     if (empty($_POST['nom'])) {
         $msg[] = " Vous n'avez pas entré le nom ";
@@ -65,28 +68,28 @@ if (isset($_POST['noemp'])) {
         }
     } else {
 
-        $sql = "INSERT INTO emp(noemp, nom, prenom, emploi, sup, embauche, sal, comm, noserv, noproj) VALUES('" . $_POST["noemp"] . "','" . $_POST["nom"] . "','" . $_POST["prenom"] . "','" . $_POST["emploi"] . "','" . $_POST["sup"] . "','" . $_POST["embauche"] . "','" . $_POST["sal"] . "','" . $_POST["comm"] . "','" . $_POST["noserv"] . "','" . $_POST["noproj"] . "' );";
-        maQuery($sql, 'nop');
-        $noemp = $_POST['noemp'];
-        $insert_date = "UPDATE emp SET date_ajout = DATE(NOW()) WHERE noemp = $noemp;";
-        maQuery($insert_date, 'nop');
-        function selectAllProjectsNum()
-        {
-            $con = mysqli_init();
-            if (!$con) {
-                die("mysqli_init failed");
-            }
-            mysqli_real_connect($con, 'localhost', 'zak', 'mdp', 'gestion_emp');
-            $sql = " SELECT DISTINCT noproj FROM proj;";
-            $rs = mysqli_query($con, $sql);
 
-            $data = mysqli_fetch_all($rs, MYSQLI_ASSOC);
-            mysqli_free_result($rs);
-            return $data;
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $emploi = $_POST['emploi'];
+        $sup = $_POST['sup'];
+        $embauche = $_POST['embauche'];
+        $sal = $_POST['sal'];
+        $comm = $_POST['comm'];
+        $noserv = $_POST['noserv'];
+        $noproj = $_POST['noproj'];
 
-            mysqli_close($con);
+        // 
+        print_r($_POST);
+        $empService = new EmployeService();
+        $createdEmp = $empService->createEmp($nom, $prenom, $emploi, $sup, $embauche, $sal, $comm, $noserv, $noproj);
+        if (!$createdEmp) {
+            echo "erreur, l'employé n'a pas pu être ajouté à la bdd";
+        } else {
+
+            header("Location: tableau-connecte.php?Enregistrement=succes");
         }
-
-        header("Location: tableau-connecte.php?Enregistrement=succes");
     }
+} else {
+    echo 'post passe pas';
 }

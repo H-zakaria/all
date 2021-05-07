@@ -1,41 +1,9 @@
 <?php
 
-include_once 'header.php';
-?>
-<table>
-    <thead>
-        <tr>
-            <th>Numero du service</th>
-            <th>Designation</th>
-            <th>Ville</th>
-            <th class="fk">nombres d'employés du service</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $noemp = $_GET['noserv'];
+include_once(__DIR__ . '/header.php');
 
+if (!isset($_SESSION['user_id'])) {
 
-        $datas = selectNbrOfEmpsByServs();
-
-
-        foreach ($datas as $data) {
-
-            echo "<tr>";
-            echo "<td>" . $data['noserv'] . "</td>";
-            echo "<td>" . $data['service'] . "</td>";
-            echo "<td>" . $data['ville'] . "</td>";
-            echo "<td class = 'fk' >" . $data['nombre_d_employes_du_service'] . "</td>";
-            echo "</tr>";
-        }
-
-
-
-
-        ?>
-    </tbody>
-</table>
-<a href="tableau-connecte.php"><button>TABLEAU</button></a>
-</body>
-
-</html>
+    header("Location: signup&login_form.php");
+}
+afficherDetailsServ();
