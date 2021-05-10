@@ -1,6 +1,6 @@
 <?php
 include_once(__DIR__ . '/../Model/Service.php');
-
+include_once(__DIR__ . '/CommonDAO.php');
 class ServiceDAO extends CommonDAO
 {
 
@@ -14,6 +14,18 @@ class ServiceDAO extends CommonDAO
     $rs = $stmt->get_result();
     $db->close();
     return $rs;
+  }
+
+  function updateService($updatedServ)
+  {
+    $noserv = $updatedServ->getNoserv();
+    $service = $updatedServ->getService();
+    $ville = $updatedServ->getVille();
+
+    $db = $this->connexion();
+    $stmt = $db->prepare("UPDATE serv SET noserv = ?, service = ?, ville = ? WHERE noserv = ?  or  service = ?;");
+    $stmt->bind_param('issis', $noserv, $service, $ville, $noserv, $service);
+    $stmt->execute();
   }
 
 
@@ -59,18 +71,30 @@ class ServiceDAO extends CommonDAO
   function selectAllFromServ()
   {
     $db = $this->connexion();
-    $stmt = $db->prepare("SELECT * FROM serv;");
+    $stmt = $db->prepare("SELECT serv.*, count(emp.noemp) as 'nombre_employes' FROM serv LEFT JOIN emp ON serv.noserv = emp.noserv GROUP BY noserv;");
     $stmt->execute();
     $rs = $stmt->get_result();
     $data = $rs->fetch_all(MYSQLI_ASSOC);
     $services = [];
     foreach ($data as $d) {
       $service = new Service;
-      $service->setNoserv($d['noserv'])->setService($d['service'])->setVille($d['ville']);
+      $service->setNoserv($d['noserv'])->setService($d['service'])->setVille($d['ville'])->setNbrOfEmps($d['nombre_employes']);
       array_push($services, $service);
     }
     $rs->free();
     $db->close();
     return $services;
+  }
+
+  function createService(Service $newServ)
+  {
+    $db = $this->connexion();
+    $noserv = $newServ->getNoserv();
+    $nomServ = $newServ->getService();
+    $ville = $newServ->getVille();
+    $stmt = $db->prepare("INSERT INTO serv(noserv, service, ville) VALUES(?,?,?);");
+    $stmt->bind_param('iss', $noserv, $nomServ, $ville);
+    $stmt->execute();
+    $db->close();
   }
 }

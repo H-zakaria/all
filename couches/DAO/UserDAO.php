@@ -1,5 +1,5 @@
 <?php
-
+include_once(__DIR__ . '/CommonDAO.php');
 class UserDAO extends CommonDAO
 {
 

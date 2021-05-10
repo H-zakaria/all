@@ -184,7 +184,7 @@ class EmployeDAO extends CommonDAO
   function ajoutsJour()
   {
     $db = $this->connexion();
-    $stmt = $db->prepare("SELECT count(*) as 'count' from emp where date_ajout = DATE(NOW());");
+    $stmt = $db->prepare("SELECT count(*) as 'count' from emp where date_ajout = CURDATE();");
     $stmt->execute();
     $rs = $stmt->get_result();
     $data = $rs->fetch_array(MYSQLI_ASSOC);
