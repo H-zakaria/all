@@ -11,12 +11,9 @@ function log_sign_form()
         <input type="text" name="username" placeholder="Nom" class="form_field">
         <input type="password" name="password" placeholder="mdp" class="form_field">
         <button type="submit" name="submit_signup">s'enregristrer</button>
-        <button type="submit" name="submit_login">se connecter</button>
       </form>
-
     </div>
   </body>
-
   </html>
 <?php
 }

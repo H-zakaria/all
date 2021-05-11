@@ -2,11 +2,11 @@
 
 include_once(__DIR__ . '/../Service/UserService.php');
 
+
 if (!isset($_SESSION['user_id'])) {
 
-  // header("Location: signup&login_form.php");
+  header("Location: form_login.php");
 }
-
 
 if (isset($_POST['submit_signup'])) {
 
@@ -109,6 +109,3 @@ $created = $userService->createUser($username, $password); //objet user
 
 
 ?>
-</body>
-
-</html>
