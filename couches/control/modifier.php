@@ -14,8 +14,12 @@ if (isset($_POST['noemp'])) {
 
   $noemp = $_POST['noemp'];
   $empService = new EmployeService;
-  $previous = $empService->selectAllOfOneEmpInArray($noemp);
-  print_r($previous);
+  try{
+$previous = $empService->selectAllOfOneEmpInArray($noemp);
+  }catch(ServiceException $e){
+
+  }
+  
 
   $query = [];
   $modif = array_diff($_POST, $previous);
@@ -47,7 +51,12 @@ if (isset($_POST['noemp'])) {
 
   $modifService = new ModificationService;
   foreach ($query as $modification) {
-    $modifService->recordModif($noemp, $modification);
+    try{
+$modifService->recordModif($noemp, $modification);
+    }catch(ServiceException $e){
+  
+    }
+    
   }
   // Modification=succes?
 

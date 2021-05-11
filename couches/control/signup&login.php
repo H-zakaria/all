@@ -6,10 +6,9 @@ if (!isset($_SESSION['user_id'])) {
 
   // header("Location: signup&login_form.php");
 }
-echo 'here1';
+
 
 if (isset($_POST['submit_signup'])) {
-  echo 'here2';
 
   $username = $_POST['username'];
   $password = $_POST['password'];
@@ -26,7 +25,12 @@ if (isset($_POST['submit_signup'])) {
     exit();
   } else {
     $userService = new UserService();
-    $usernames = $userService->checkUsername($username);
+    try{
+$usernames = $userService->checkUsername($username);
+    }catch(ServiceException $e){
+  
+    }
+    
 
 
     if ($usernames[0]['nom'] > 0) {
@@ -34,7 +38,12 @@ if (isset($_POST['submit_signup'])) {
       exit();
     } else {
       $userService = new UserService();
-      $created = $userService->createUser($username, $password); //objet user
+      try{
+$created = $userService->createUser($username, $password); //objet user
+      }catch(ServiceException $e){
+    
+      }
+      
 
       if (!$created) {
         echo "erreur: l'utilisateur n'a pas pu être crée";
@@ -57,12 +66,22 @@ if (isset($_POST['submit_signup'])) {
   } else {   //voir si le nom existe 
 
     $userService = new UserService();
-    $usernames = $userService->checkUsername($username);
+    try{
+      $usernames = $userService->checkUsername($username);
+
+    }catch(ServiceException $e){
+  
+    }
 
     if ($usernames[0]['nom'] == 1) {                               //si oui voir si le mdp est correct
 
-      $sql = "SELECT * FROM users WHERE nom='$username';";
-      $user = $userService->selectUserInfo($username);
+      // $sql = "SELECT * FROM users WHERE nom='$username';";
+      try{
+
+        $user = $userService->selectUserInfo($username);
+      }catch(ServiceException $e){
+    
+      }
 
       $pswrd_check = password_verify($password, $user[0]['mdp']);
       if ($pswrd_check == false) {

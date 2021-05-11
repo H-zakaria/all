@@ -1,6 +1,6 @@
 <?php
 
-function afficherTabEmp()
+function afficherTabEmp(array $infosEmps, array $sups, array $services)
 {
   include_once(__DIR__ . '/../Service/ServiceService.php');
 
@@ -34,9 +34,7 @@ function afficherTabEmp()
         </thead>
         <tbody>
           <?php
-          $empService = new EmployeService;
-          $infosEmps =  $empService->infosGeneralesEmp();
-          $sups = $empService->selectAllSupsNum();
+         
 
           $sups_1d = [];
           $i = 0;
@@ -111,8 +109,6 @@ function afficherTabServices()
         echo "<hr>";
         echo "<br>";
 
-        $serv = new ServiceService();
-        $services = $serv->selectAllFromServ();
         // print_r($datas);
 
 

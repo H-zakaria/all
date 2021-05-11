@@ -7,12 +7,19 @@ class ServiceDAO extends CommonDAO
 
   function deleteServ($noserv)
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("DELETE FROM serv WHERE Noserv = ?;");
     $stmt->bind_param('i', $noserv);
     $stmt->execute();
     $rs = $stmt->get_result();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $rs;
   }
 
@@ -21,16 +28,24 @@ class ServiceDAO extends CommonDAO
     $noserv = $updatedServ->getNoserv();
     $service = $updatedServ->getService();
     $ville = $updatedServ->getVille();
-
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("UPDATE serv SET noserv = ?, service = ?, ville = ? WHERE noserv = ?  or  service = ?;");
     $stmt->bind_param('issis', $noserv, $service, $ville, $noserv, $service);
     $stmt->execute();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
   }
 
 
   function selectNbrOfEmpsByServs()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT serv.*, count(emp.noemp) as 'nombre_d_employes_du_service' from serv
     INNER JOIN emp on emp.noserv = serv.noserv;");
@@ -45,13 +60,19 @@ class ServiceDAO extends CommonDAO
     }
     $rs->free();
     $db->close();
+   }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
 
     return $empsByServ;
   }
 
   function selectServByNoserv($noserv)
   {
-
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT * FROM serv WHERE noserv = ?;");
     $stmt->bind_param('i', $noserv);
@@ -65,11 +86,18 @@ class ServiceDAO extends CommonDAO
 
     $rs->free();
     $db->close();
+  }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $serv;
   }
 
   function selectAllFromServ()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT serv.*, count(emp.noemp) as 'nombre_employes' FROM serv LEFT JOIN emp ON serv.noserv = emp.noserv GROUP BY noserv;");
     $stmt->execute();
@@ -83,11 +111,18 @@ class ServiceDAO extends CommonDAO
     }
     $rs->free();
     $db->close();
+  }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $services;
   }
 
   function createService(Service $newServ)
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $noserv = $newServ->getNoserv();
     $nomServ = $newServ->getService();
@@ -96,5 +131,10 @@ class ServiceDAO extends CommonDAO
     $stmt->bind_param('iss', $noserv, $nomServ, $ville);
     $stmt->execute();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
   }
 }

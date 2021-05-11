@@ -8,7 +8,8 @@ class ModificationDAO extends CommonDAO
 
   function selectModifHisto($noemp)
   {
-
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT m.modification, m.Date, m.Time FROM date_modif m WHERE m.noemp = ?;");
     $stmt->bind_param('i', $noemp);
@@ -23,19 +24,32 @@ class ModificationDAO extends CommonDAO
     }
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $modifs;
   }
 
   function recordModif(Modification $modif)
   {
+
     $noemp = $modif->getNoemp();
     $modification = $modif->getModification();
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("INSERT INTO date_modif (noemp, modification, DateTime, Date, Time, Year) VALUE( ?, ?, NOW(), NOW(), NOW(), NOW());");
     $stmt->bind_param('is', $noemp, $modification);
     $stmt->execute();
     $rs = $stmt->get_result();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $rs;
   }
 }

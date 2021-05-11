@@ -11,6 +11,10 @@ $newServ = new Service;
 $newServ->setNoserv($_POST["noserv"])->setService($_POST["service"])->setVille($_POST["ville"]);
 
 $servService = new ServiceService;
+try{
 $servService->createService($newServ);
-
+}catch(ServiceException $e){
+  echo 'Un probleme est survenu lors de la création du service.';
+  echo $e->getMessage();
+}
 header("Location: tableau-connecte.php?Enregistrement=succes");

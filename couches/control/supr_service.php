@@ -9,6 +9,11 @@ if (!isset($_SESSION)) {
 
 $noserv = $_GET['noserv'];
 $servService = new ServiceService;
-$deleted = $servService->deleteServ($noserv);
+try{
+
+  $deleted = $servService->deleteServ($noserv);
+}catch(ServiceException $e){
+
+}
 
 header("Location: tableau-connecte.php?suppression=succes");

@@ -1,6 +1,6 @@
 <?php
 
-function showHeader()
+function showHeader(int $count)
 {
   include_once(__DIR__ . '/../Service/EmployeService.php')
 ?>
@@ -18,8 +18,7 @@ function showHeader()
   <body>
     <nav class="nav">
       <?php if (isset($_SESSION['user_id'])) {
-        $empService = new EmployeService;
-        $counter = $empService->ajoutsJour();
+        
       ?>
 
         <p class="username"><?php echo $_SESSION['nom']; ?></p>

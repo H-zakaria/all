@@ -13,7 +13,12 @@ if (!isset($_SESSION['user_id'])) {
 
 
 $proj = new ProjetService();
-$num_projets = $proj->selectAllProjectsNum();
+try{
+  $num_projets = $proj->selectAllProjectsNum();
+}catch(ServiceException $e){
+  echo $e->getMessage();
+}
+
 
 
 $msg = [];
@@ -84,9 +89,20 @@ if (isset($_POST)) {
     // 
     print_r($_POST);
     $empService = new EmployeService();
-    $empService->createEmp($nom, $prenom, $emploi, $sup, $embauche, $sal, $comm, $noserv, $noproj);
+    $problem = false;
+    try{
+      $empService->createEmp($nom, $prenom, $emploi, $sup, $embauche, $sal, $comm, $noserv, $noproj);
+    }catch(ServiceException $e){
+      echo "Un probleme est survennu lors de la creation de l'employé réessayez ulterieurement";
+      echo $e->getMessage();
+      //faire en sorte que le header ne se lance pas? -> faire collapse les pages pour que les données du form soient conservée et que l'affichage du message soit sur la bonne page
+      $problem = true;//et enlever ça
+    }
+    if($problem==false){
+      header("Location: tableau-connecte.php?Enregistrement=succes");
+    }
 
-    header("Location: tableau-connecte.php?Enregistrement=succes");
+    
   }
 } else {
   echo 'post passe pas';

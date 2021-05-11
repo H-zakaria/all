@@ -8,14 +8,24 @@ if (!isset($_SESSION)) {
 
 
 $empService = new EmployeService;
-$sups = $empService->selectAllSupsNum();
+try{
+  $sups = $empService->selectAllSupsNum();
+
+}catch(ServiceException $e){
+
+}
 $sups_1d = [];
 foreach ($sups as $sup) {
   $sups_1d[] = $sup['noemp'];
 }
 if (!in_array($_GET['noemp'], $sups_1d)) {
   $noemp = $_GET['noemp'];
-  $deleted = $empService->deleteEmp($noemp);
+  try{
+
+    $deleted = $empService->deleteEmp($noemp);
+  }catch(ServiceException $e){
+
+  }
 
 
 

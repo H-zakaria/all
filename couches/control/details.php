@@ -14,9 +14,15 @@ showHeader();
 
 $noemp = $_GET['noemp'];
 
+
 $empService = new EmployeService;
+try{
 $emp = $empService->selectDetailInfos($noemp);
 $supInfos = $empService->selectDetailInfosSup($noemp);
 $modifServ = new ModificationService();
 $modifs = $modifServ->selectModifHisto($noemp);
+}catch (ServiceException $e){
+  echo "Un probleme est survenu dans l'affichage de la page réessayez ulterieurement.";
+}
+
 afficherDetails($emp, $supInfos, $modifs);

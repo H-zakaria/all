@@ -16,6 +16,11 @@ if (isset($_POST['noserv'])) {
   $updatedServ = new Service;
   $updatedServ->setNoserv($noserv)->setService($service)->setVille($ville);
   $servServ = new ServiceService;
-  $servServ->updateService($updatedServ);
+  try{
+    
+    $servServ->updateService($updatedServ);
+  }catch(ServiceException $e){
+
+  }
   header("Location: tableau-connecte.php?Modification=succes");
 }

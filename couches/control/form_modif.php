@@ -11,5 +11,9 @@ if (!isset($_SESSION['user_id'])) {
 showHeader();
 $noemp = $_GET['noemp'];
 $empService = new EmployeService;
-$emp =  $empService->selectAllOfOneEmpByNoemp($noemp);
+try{
+  $emp =  $empService->selectAllOfOneEmpByNoemp($noemp);
+}catch(ServiceException $e){
+  echo $e->getMessage();
+}
 afficherFormModifEmp($emp);

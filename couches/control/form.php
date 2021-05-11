@@ -12,8 +12,12 @@ if (!isset($_SESSION)) {
   header("Location: signup&login_form.php");
 }
 showHeader();
-$empService = new EmployeService;
-$superieurs = $empService->selectInfosSups();
-$projService = new ProjetService;
-$projets = $projService->selectAllProjects();
+try{
+  $empService = new EmployeService;
+  $superieurs = $empService->selectInfosSups();
+  $projService = new ProjetService;
+  $projets = $projService->selectAllProjects();
+}catch(ServiceException $e){
+  echo $e->getMessage();
+}
 afficherFormAjout($superieurs, $projets);

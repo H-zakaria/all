@@ -9,7 +9,18 @@ class CommonDAO
 
   function connexion()
   {
-    $conn = new mysqli($this->dbServername, $this->username, $this->dbPassword, $this->dbName);
-    return $conn;
+
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
+      $conn = new mysqli($this->dbServername, $this->username, $this->dbPassword, $this->dbName);
+      return $conn;
+      
+    }catch(Exception $e){
+
+      throw new DAOException($e->getMessage(), $e->getCode());
+      
+    }
+    
+    
   }
 }

@@ -19,7 +19,16 @@ if ($_GET['but'] == 'ajouter') {
 
   // $datas = selectThisServ($conn, $_GET["noserv"]);
   $serv = new ServiceService();
-  $service = $serv->selectServByNoserv($noserv);
+  try{
+    $service = $serv->selectServByNoserv($noserv);
+  }catch(ServiceException $e){
+    $code = $e->getCode();
+    echo $e->getMessage();
+    // if ($code == 1515{
+    //   echo "blah";
+    // }
+  }
+
 
   afficherFormModifierService($service);
 } else {

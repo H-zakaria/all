@@ -10,10 +10,6 @@ class EmployeDAO extends CommonDAO
   //param = objet
   function createEmp(Employe2 $emp)
   {
-    $db = $this->connexion();
-    $stmt = $db->prepare("INSERT INTO emp(nom, prenom, emploi, sup, embauche, sal, comm, noserv, noproj) VALUES(? ,? ,? ,? ,? ,? ,? ,? ,?);");
-    //definir var par get avant de passer dans param
-    // $noemp = $emp->getNoemp();
     $nom = $emp->getNom();
     $prenom = $emp->getPrenom();
     $emploi = $emp->getEmploi();
@@ -23,15 +19,22 @@ class EmployeDAO extends CommonDAO
     $comm = $emp->getComm();
     $noserv = $emp->getNoserv();
     $noproj =  $emp->getNoproj();
-    // $date_ajout = ;
+    mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR);
+    try{
+      $db = $this->connexion();
+      $stmt = $db->prepare("INSERT INTO emp(nom, prenom, emploi, sup, embauche, sal, comm, noserv, noproj) VALUES(? ,? ,? ,? ,? ,? ,? ,? ,?);");
+      $stmt->bind_param('sssisddii', $nom, $prenom,  $emploi, $sup, $embauche, $sal, $comm, $noserv, $noproj);
+      $stmt->execute();
+      $rs = $stmt->get_result();
+      $db->close();
+    }catch(Exception $e){
 
-    $stmt->bind_param('sssisddii', $nom, $prenom,  $emploi, $sup, $embauche, $sal, $comm, $noserv, $noproj);
-    $stmt->execute();
-    $rs = $stmt->get_result();
+      throw new DAOException($e->getMessage(), $e->getCode());
 
-    echo "####################";
-    var_dump($rs);
-    $db->close();
+    }
+   
+
+    
     return $rs;
   }
   function updateEmp(Employe2 $emp)
@@ -46,13 +49,19 @@ class EmployeDAO extends CommonDAO
     $comm = $emp->getComm();
     $noserv = $emp->getNoserv();
     $noproj =  $emp->getNoproj();
-
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("UPDATE emp SET nom = ?, prenom = ?, emploi = ?, sup = ?, embauche = ?, sal = ?, comm = ?, noserv = ?, noproj = ? WHERE noemp = ?;");
     $stmt->bind_param('sssisddiii',  $nom, $prenom, $emploi, $sup, $embauche, $sal, $comm, $noserv, $noproj, $noemp);
     $stmt->execute();
     $rs = $stmt->get_result();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $rs;
   }
 
@@ -69,17 +78,29 @@ class EmployeDAO extends CommonDAO
 
   function deleteEmp($noemp)
   {
+
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("DELETE FROM emp WHERE noemp = ?;");
     $stmt->bind_param('i', $noemp);
     $stmt->execute();
     $rs = $stmt->get_result();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
+    
+  
     return $rs;
   }
 
   function selectInfosSups()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT  e.noemp, e.nom, e.prenom, service, e.emploi FROM emp e 
         INNER JOIN serv s on e.noserv = s.noserv 
@@ -95,12 +116,18 @@ class EmployeDAO extends CommonDAO
     }
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $infosSups;
   }
 
   function selectAllOfOneEmpByNoemp($noemp)
   {
-
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT * FROM emp WHERE noemp = ?;");
     $stmt->bind_param('i', $noemp);
@@ -111,11 +138,17 @@ class EmployeDAO extends CommonDAO
     $emp->setNoemp($data['noemp'])->setNom($data['nom'])->setPrenom($data['prenom'])->setEmploi($data['emploi'])->setSup($data['sup'])->setEmbauche($data['embauche'])->setSal($data['sal'])->setComm($data['comm'])->setNoserv($data['noserv'])->setNoproj($data['noproj'])->setDate_ajout($data['date_ajout']);
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $emp;
   }
   function selectAllOfOneEmpInArray($noemp)
   {
-
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT * FROM emp WHERE noemp = ?;");
     $stmt->bind_param('i', $noemp);
@@ -125,11 +158,18 @@ class EmployeDAO extends CommonDAO
 
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $data;
   }
 
   function infosGeneralesEmp()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT e.*, s.service, p.nomproj, e2.nom as nsup FROM emp e
     INNER JOIN serv s on s.noserv = e.noserv
@@ -146,11 +186,18 @@ class EmployeDAO extends CommonDAO
     }
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $infos;
   }
 
   function selectDetailInfosSup($noemp)
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT sup.noemp, sup.nom, s.service, sup.emploi, sup.sup as sup_noemp, proj.nomproj
     FROM emp as sup
@@ -166,11 +213,18 @@ class EmployeDAO extends CommonDAO
     $sup->setNoemp($d['noemp'])->setNom($d['nom'])->setEmploi($d['emploi'])->setSupNoemp($d['sup_noemp'])->setNomService($d['service'])->setNomProjet($d['nomproj']);
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $sup;
   }
 
   function selectAllSupsNum()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT DISTINCT e.noemp FROM emp e
     INNER JOIN emp e2 on e.noemp = e2.sup;");
@@ -179,10 +233,17 @@ class EmployeDAO extends CommonDAO
     $data = $rs->fetch_all(MYSQLI_ASSOC);
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $data;
   }
   function ajoutsJour()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT count(*) as 'count' from emp where date_ajout = CURDATE();");
     $stmt->execute();
@@ -190,11 +251,18 @@ class EmployeDAO extends CommonDAO
     $data = $rs->fetch_array(MYSQLI_ASSOC);
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $data;
   }
 
   function selectDetailInfos($noemp)
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT e.*, s.*, p.* FROM emp e 
       INNER JOIN serv s on e.noserv = s.noserv
@@ -210,6 +278,11 @@ class EmployeDAO extends CommonDAO
 
     $rs->free();
     $db->close();
+    }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
 
     return $emp;
   }
@@ -217,6 +290,8 @@ class EmployeDAO extends CommonDAO
 
   function countEmp()
   {
+    mysqli_report(MYSQLI_REPORT_STRICT|MYSQLI_REPORT_ERROR);
+    try{
     $db = $this->connexion();
     $stmt = $db->prepare("SELECT count(*) as 'nombre_d_employes' from emp;");
     $stmt->execute();
@@ -224,6 +299,11 @@ class EmployeDAO extends CommonDAO
     $data = $rs->fetch_array(MYSQLI_ASSOC);
     $rs->free();
     $db->close();
+   }catch(Exception $e){
+
+    throw new DAOException($e->getMessage(), $e->getCode());
+    
+    }
     return $data;
   }
 }

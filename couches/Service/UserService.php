@@ -10,13 +10,21 @@ class UserService
     function checkUsername($username)
     {
         $userDAO = new UserDAO();
+        try{
         return $userDAO->checkUsername($username);
+    }catch(DAOException $e){
+        throw new ServiceException($e->getMessage(), $e->getCode());
+        }
     }
     function createUser($username, $password)
     {
 
         $userDAO = new UserDAO();
+        try{
         return $userDAO->createUser($username, $password);
+    }catch(DAOException $e){
+        throw new ServiceException($e->getMessage(), $e->getCode());
+        }
     }
     // function createUser($username, $password)
     // {
@@ -31,6 +39,10 @@ class UserService
     function selectUserInfo($username)
     {
         $userDAO = new UserDAO();
+        try{
         return $userDAO->selectUserInfo($username);
+    }catch(DAOException $e){
+        throw new ServiceException($e->getMessage(), $e->getCode());
+        }
     }
 }
