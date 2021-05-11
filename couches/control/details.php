@@ -28,4 +28,4 @@ $modifs = $modifServ->selectModifHisto($noemp);
   echo "Un probleme est survenu dans l'affichage de la page réessayez ulterieurement.";
 }
 
-afficherDetails($emp, $supInfos, $modifs);
+show_details($emp, $supInfos, $modifs);

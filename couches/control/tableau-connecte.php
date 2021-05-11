@@ -17,9 +17,7 @@ if (isset($_SESSION['user_id'])) {
   $serv = new ServiceService();
   $services = $serv->selectAllFromServ();
   showHeader($counter);
-  afficherTabEmp($infosEmps, $sups , $services);
-  afficherTabServices();
-  
+  show_tables($infosEmps, $sups , $services);
   }catch(ServiceException $e){
     echo $e->getMessage();
   }

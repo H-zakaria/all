@@ -1,5 +1,5 @@
 <?php
-function afficherDetails(Employe2 $emp, Employe2 $supInfos, array $modifs)
+function show_details(Employe2 $emp, Employe2 $supInfos, array $modifs)
 {
 ?>
   <div class="details">

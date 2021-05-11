@@ -1,6 +1,8 @@
 <?php
 
-function afficherTabEmp(array $infosEmps, array $sups, array $services)
+function show_tables(array $infosEmps, array $sups, array $services){
+  
+function show_emp_table(array $infosEmps, array $sups)
 {
   include_once(__DIR__ . '/../Service/ServiceService.php');
 
@@ -85,7 +87,7 @@ function afficherTabEmp(array $infosEmps, array $sups, array $services)
 }
 
 
-function afficherTabServices()
+function show_serv_table(array $services)
 {
 
   ?>
@@ -108,9 +110,6 @@ function afficherTabServices()
         echo "<br>";
         echo "<hr>";
         echo "<br>";
-
-        // print_r($datas);
-
 
         foreach ($services as $service) {
           $noserv = $service->getNoserv();
@@ -136,3 +135,4 @@ function afficherTabServices()
   </html>
 
 <?php } ?>
+}
