@@ -5,7 +5,7 @@ function afficherFormModifEmp(Employe2 $emp)
 
 
   <div class="form_div">
-    <form class="form" action="modifier.php" method="POST">
+    <form class="form" action="form_modif.php" method="POST">
       <input type="hidden" name="noemp" value="<?php echo $emp->getNoemp() ?>">
       <input type="text" name="nom" value="<?php echo $emp->getNom(); ?>" placeholder="Entrez le nom">
       <input type="text" name="prenom" value="<?php echo $emp->getPrenom(); ?>" placeholder="Entrez le prenom">

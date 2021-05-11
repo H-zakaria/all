@@ -1,6 +1,6 @@
 <?php
 
-function showHeader(int $count)
+function showHeader(int $addedToday)
 {
   include_once(__DIR__ . '/../Service/EmployeService.php')
 ?>
@@ -22,7 +22,7 @@ function showHeader(int $count)
       ?>
 
         <p class="username"><?php echo $_SESSION['nom']; ?></p>
-        <p id="counter">Ajouts du jour: <span><?php echo " " . $counter['count']; ?></span></p>
+        <p id="counter">Ajouts du jour: <span><?php echo " " . $addedToday; ?></span></p>
         <p><a href="tableau-connecte.php" style="list-style: none; margin-left: 50px;text-decoration:none; color: #fff;">Tableau</a></p>
 
 

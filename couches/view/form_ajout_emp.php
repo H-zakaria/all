@@ -4,7 +4,7 @@ function afficherFormAjout(array $superieurs, array $projets)
 ?>
 
   <div class="form_div">
-    <form class="form" action="ajouter.php" method="POST">
+    <form class="form" action="form.php" method="POST">
       <input type="text" name="nom" placeholder="Entrez le nom">
       <input type="text" name="prenom" placeholder="Entrez le prenom">
       <input type="text" name="emploi" placeholder="Entrez l'emploi'">

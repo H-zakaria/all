@@ -10,13 +10,16 @@ if (!isset($_SESSION['user_id'])) {
 
   header("Location: signup&login_form.php");
 }
-showHeader();
+
 
 $noemp = $_GET['noemp'];
 
 
 $empService = new EmployeService;
-try{
+try{ 
+$empService = new EmployeService;
+$counter = $empService->ajoutsJour();
+showHeader($counter);
 $emp = $empService->selectDetailInfos($noemp);
 $supInfos = $empService->selectDetailInfosSup($noemp);
 $modifServ = new ModificationService();

@@ -1,5 +1,5 @@
 <?php
-echo 'im here';
+
 include_once(__DIR__ . '/../Service/UserService.php');
 
 if (!isset($_SESSION['user_id'])) {
@@ -15,12 +15,12 @@ if (isset($_POST['submit_signup'])) {
 
   if (empty($username) || empty($password)) {
     // header("Location: signup&login_form.php?error=emptyfields&username=" . $username);
-    echo 'here3';
+    
 
     exit();
   } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
     // header("Location: signup&login_form.php?error=invalidusername");
-    echo 'here4';
+  
 
     exit();
   } else {

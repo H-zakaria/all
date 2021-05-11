@@ -32,9 +32,6 @@ class EmployeDAO extends CommonDAO
       throw new DAOException($e->getMessage(), $e->getCode());
 
     }
-   
-
-    
     return $rs;
   }
   function updateEmp(Employe2 $emp)
