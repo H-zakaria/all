@@ -1,5 +1,5 @@
 <?php
-
+include_once(__DIR__ . '/../exceptions/ServiceException.php');
 include_once(__DIR__ . '/../Service/UserService.php');
 
 
@@ -14,42 +14,34 @@ if (isset($_POST['submit_signup'])) {
   $password = $_POST['password'];
 
   if (empty($username) || empty($password)) {
-    // header("Location: signup&login_form.php?error=emptyfields&username=" . $username);
-    
+    header("Location: form_signup.php?signup=emptyfields&username=" . $username);
+
 
     exit();
   } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-    // header("Location: signup&login_form.php?error=invalidusername");
-  
+    header("Location: form_signup.php?signup=invalidusername");
 
     exit();
   } else {
     $userService = new UserService();
-    try{
-$usernames = $userService->checkUsername($username);
-    }catch(ServiceException $e){
-  
+    try {
+      $usernames = $userService->checkUsername($username);
+    } catch (ServiceException $e) {
     }
-    
+
 
 
     if ($usernames[0]['nom'] > 0) {
-      // header("Location: signup&login_form.php?error=usernametaken");
+      header("Location: form_signup.php?signup=usernametaken");
       exit();
     } else {
       $userService = new UserService();
-      try{
-$created = $userService->createUser($username, $password); //objet user
-      }catch(ServiceException $e){
-    
+      try {
+        $created = $userService->createUser($username, $password); //objet user
+      } catch (ServiceException $e) {
       }
-      
 
-      if (!$created) {
-        echo "erreur: l'utilisateur n'a pas pu être crée";
-      } else {
-        // header("Location: signup&login_form.php?signup=success");
-      }
+      header("Location: form_signup.php?signup=success");
     }
   }
 } else if (isset($_POST['submit_login'])) {
@@ -58,34 +50,30 @@ $created = $userService->createUser($username, $password); //objet user
   $password = $_POST['password'];
 
   if (empty($username) || empty($password)) {
-    // header("Location: signup&login_form.php?error=emptyfields&username=" . $username);
+    header("Location: form_login.php?login=emptyfields&username=" . $username);
     exit();
   } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-    // header("Location: signup&login_form.php?error=invalidusername");
+    header("Location: form_login.php?login=invalidusername");
     exit();
   } else {   //voir si le nom existe 
 
     $userService = new UserService();
-    try{
+    try {
       $usernames = $userService->checkUsername($username);
-
-    }catch(ServiceException $e){
-  
+    } catch (ServiceException $e) {
     }
 
     if ($usernames[0]['nom'] == 1) {                               //si oui voir si le mdp est correct
 
-      // $sql = "SELECT * FROM users WHERE nom='$username';";
-      try{
+      try {
 
         $user = $userService->selectUserInfo($username);
-      }catch(ServiceException $e){
-    
+      } catch (ServiceException $e) {
       }
 
       $pswrd_check = password_verify($password, $user[0]['mdp']);
       if ($pswrd_check == false) {
-        // header("Location: signup&login_form.php?error=wrongpassword");
+        header("Location: form_login.php?login=wrong&username=" . $username);
         exit();
       } else        //si oui ouvrir une session
       {
@@ -98,14 +86,11 @@ $created = $userService->createUser($username, $password); //objet user
         exit();
       }
     } else {
-      // header("Location: signup&login_form.php?error=wrongusername");
+      header("Location: form_login.php?login=wrong&username=" . $username);
       exit();
     }
   }
 } else {
-  echo 'here last else';
-  // header("Location: signup&login_form.php");
+
+  header("Location: form_login.php");
 }
-
-
-?>

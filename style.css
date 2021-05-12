@@ -61,7 +61,7 @@ body{
    
 }
 .container{
-padding-top: 74px;
+/* padding-top: 74px; */
 
 }
 .table1{
@@ -86,6 +86,7 @@ table{
 }
 td{
     font-weight: 700;
+    font-size: 16px;
 }
 th, td{
     padding: 5px 10px;
@@ -192,6 +193,11 @@ button:hover{
     margin: 0 auto;
     
 }
+.error{
+  color: crimson;
+  font-size: 14px;
+  padding-top: 5px;
+}
 form select{
     padding: 10px 0;
     margin: 5px 0;
@@ -220,6 +226,14 @@ form select{
 }
 .form .input_btn:hover{
     background-color: rgb(9, 90, 36);
+}
+body > div > form > a{
+  font-size: 12px;
+  color: #000;
+  text-decoration: none;
+}
+body > div > form > a:hover{
+  color: green;
 }
 
 /*details*/

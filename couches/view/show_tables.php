@@ -1,7 +1,8 @@
 <?php
 
-function show_tables(array $infosEmps, array $sups, array $services){
-  
+// function show_tables(array $infosEmps, array $sups, array $services)
+// {
+
 function show_emp_table(array $infosEmps, array $sups)
 {
   include_once(__DIR__ . '/../Service/ServiceService.php');
@@ -36,7 +37,7 @@ function show_emp_table(array $infosEmps, array $sups)
         </thead>
         <tbody>
           <?php
-         
+
 
           $sups_1d = [];
           $i = 0;
@@ -133,6 +134,7 @@ function show_serv_table(array $services)
   </body>
 
   </html>
-
-<?php } ?>
+<?php
 }
+// }
+?>

@@ -1,4 +1,4 @@
 <?php
-Class UserDAOException extends Exception{
-
+class DAOException extends Exception
+{
 }
